@@ -1,0 +1,60 @@
+
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&family=Poppins:wght@400;700&display=swap');
+
+:root {
+  --color-bg: #0f0f0f;
+  --color-text: #fff;
+  --color-primary: #e63946;
+  --color-footer: #181818;
+  --color-card: #18191a;
+  --color-accent: #e63946;
+  --color-shadow: 0 4px 24px 0 rgba(0,0,0,0.18);
+  --radius: 18px;
+  --font-main: 'Poppins', 'Inter', Arial, sans-serif;
+}
+
+[data-theme='light'] {
+  --color-bg: #f7f7f7;
+  --color-text: #181818;
+  --color-primary: #e63946;
+  --color-footer: #eaeaea;
+  --color-card: #fff;
+  --color-accent: #e63946;
+  --color-shadow: 0 4px 24px 0 rgba(0,0,0,0.08);
+}
+
+body {
+  background: var(--color-bg);
+  color: var(--color-text);
+  font-family: var(--font-main);
+  transition: background 0.2s, color 0.2s;
+}
+
+.card {
+  background: var(--color-card);
+  border-radius: var(--radius);
+  box-shadow: var(--color-shadow);
+  transition: box-shadow 0.2s, transform 0.2s;
+}
+
+.card:hover {
+  box-shadow: 0 8px 32px 0 rgba(230,57,70,0.18);
+  transform: scale(1.035);
+}
+
+.btn-primary {
+  background: var(--color-accent);
+  color: #fff;
+  border: none;
+  border-radius: var(--radius);
+  font-weight: 700;
+  font-size: 1.15rem;
+  padding: 0.9rem 2.5rem;
+  box-shadow: 0 2px 8px #0002;
+  cursor: pointer;
+  transition: background 0.2s, transform 0.2s;
+}
+.btn-primary:hover {
+  background: #b22234;
+  transform: scale(1.04);
+}
