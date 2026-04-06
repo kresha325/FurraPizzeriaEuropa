@@ -1,12 +1,23 @@
+
 import { useState, useEffect } from 'react';
 import './Menu.css';
 
-const fallbackImage = '/FurraPizzeriaEuropa/pizza.jpeg';
+// Dinamikisht përcakto rrugën e fallbackImage sipas ambientit
+const getFallbackImage = () => {
+  if (window.location.pathname.startsWith('/FurraPizzeriaEuropa')) {
+    return '/FurraPizzeriaEuropa/pizza.jpeg';
+  }
+  return '/pizza.jpeg';
+};
 
 export default function Menu({ onAddToCart }) {
   const [products, setProducts] = useState([]);
   useEffect(() => {
-    fetch('/FurraPizzeriaEuropa/menu.json')
+    // Dinamikisht përcakto rrugën e menu.json
+    const menuPath = window.location.pathname.startsWith('/FurraPizzeriaEuropa')
+      ? '/FurraPizzeriaEuropa/menu.json'
+      : '/menu.json';
+    fetch(menuPath)
       .then((res) => res.json())
       .then((data) => setProducts(data));
   }, []);
@@ -19,16 +30,17 @@ export default function Menu({ onAddToCart }) {
         {products.map((product) => (
           <div className="product-card" key={product.id}>
             <img
-              src={product.image ? product.image : fallbackImage}
+              src={product.image ? product.image : getFallbackImage()}
               alt={product.name}
               className="product-img"
               width={80}
               height={80}
               style={{ objectFit: 'cover', borderRadius: '8px', marginRight: '1rem' }}
               onError={e => {
-                if (e.target.src !== window.location.origin + fallbackImage) {
+                const fallback = getFallbackImage();
+                if (e.target.src !== window.location.origin + fallback && e.target.src !== fallback) {
                   e.target.onerror = null;
-                  e.target.src = fallbackImage;
+                  e.target.src = fallback;
                 }
               }}
             />
