@@ -7,21 +7,21 @@ const menuCards = [
     category: 'Bukë',
     title: 'Bukë të freskëta',
     description: 'Bukë tradicionale, e pjekur çdo ditë.',
-    image: '/src/assets/pizza.jpeg',
+    image: '/FurraPizzeriaEuropa/pizza.jpeg',
     link: '/menu?cat=buke',
   },
   {
     category: 'Burek',
     title: 'Burek të ngrohtë',
     description: 'Burek me mish, djath ose spinaq.',
-    image: '/src/assets/pizza.jpeg',
+    image: '/FurraPizzeriaEuropa/pizza.jpeg',
     link: '/menu?cat=burek',
   },
   {
     category: 'Pizza',
     title: 'Pizza italiane',
     description: 'Pizza me përbërës të freskët dhe recetë tradicionale.',
-    image: '/src/assets/pizza.jpeg',
+    image: '/FurraPizzeriaEuropa/pizza.jpeg',
     link: '/menu?cat=pizza',
   },
 ];
@@ -44,7 +44,7 @@ export default function MenuSection() {
             <img
               src={card.image}
               alt={card.title}
-              onError={e => { e.target.onerror = null; e.target.src = '/src/assets/pizza.jpeg'; }}
+              onError={e => { e.target.onerror = null; e.target.src = '/FurraPizzeriaEuropa/pizza.jpeg'; }}
             />
             <h3>{card.title}</h3>
             <p>{card.description}</p>
