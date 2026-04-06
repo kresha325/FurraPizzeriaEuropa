@@ -1,0 +1,12 @@
+<!-- 404.html for GitHub Pages SPA redirect (universal, works for all routes) -->
+<script type="text/javascript">
+  // GitHub Pages 404 redirect for React Router SPA
+  (function () {
+    var l = window.location;
+    var pathname = l.pathname.replace(/^\/FurraPizzeriaEuropa/, "");
+    var newUrl =
+      "/FurraPizzeriaEuropa/?redirect=" +
+      encodeURIComponent(pathname + l.search + l.hash);
+    window.location.replace(newUrl);
+  })();
+</script>

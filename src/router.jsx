@@ -51,7 +51,7 @@ export default function AppRouter() {
 
 
   return (
-    <Router>
+    <Router basename="/FurraPizzeriaEuropa">
       <>
         <HeaderOrNavbar cartCount={cart.length} />
         <div style={{ minHeight: '60vh' }}>

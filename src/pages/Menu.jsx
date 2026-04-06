@@ -1,12 +1,12 @@
 import { useState, useEffect } from 'react';
 import './Menu.css';
 
-const fallbackImage = 'src/assets/pizza.jpeg';
+const fallbackImage = '/FurraPizzeriaEuropa/pizza.jpeg';
 
 export default function Menu({ onAddToCart }) {
   const [products, setProducts] = useState([]);
   useEffect(() => {
-    fetch('src/menu.json')
+    fetch('/FurraPizzeriaEuropa/menu.json')
       .then((res) => res.json())
       .then((data) => setProducts(data));
   }, []);
@@ -25,7 +25,12 @@ export default function Menu({ onAddToCart }) {
               width={80}
               height={80}
               style={{ objectFit: 'cover', borderRadius: '8px', marginRight: '1rem' }}
-              onError={e => { e.target.onerror = null; e.target.src = fallbackImage; }}
+              onError={e => {
+                if (e.target.src !== window.location.origin + fallbackImage) {
+                  e.target.onerror = null;
+                  e.target.src = fallbackImage;
+                }
+              }}
             />
             <div className="product-info">
               <span className="product-name">{product.name}</span>
