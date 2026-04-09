@@ -83,7 +83,7 @@ export default function Header({ cartCount = 0 }) {
       </nav>
       {/* Hero */}
       <div style={{ textAlign: 'center', padding: '3.5rem 1rem 1.5rem 1rem', maxWidth: 700, margin: '0 auto' }}>
-        <h1 style={{ fontSize: '2.8rem', fontWeight: 700, marginBottom: 16, textShadow: theme === 'dark' ? '0 2px 8px #000, 0 4px 16px #000a' : '0 2px 8px #fff, 0 4px 16px #fff8', color: 'var(--color-text)' }}>{t('bakery')}</h1>
+        <h1 style={{ fontSize: '2.8rem', fontWeight: 700, marginBottom: 16, textShadow: theme === 'dark' ? '0 2px 8px #000, 0 4px 16px #000a' : '0 2px 8px #fff, 0 4px 16px #fff8', color: 'var(--color-text)' }}>Europa</h1>
         <p style={{ fontSize: '1.2rem', marginBottom: 24, textShadow: theme === 'dark' ? '0 2px 8px #000, 0 4px 16px #000a' : '0 2px 8px #fff, 0 4px 16px #fff8', color: 'var(--color-text)' }}>{t('welcome')}</p>
         <Link to="/menu" style={{ background: '#b22222', color: '#fff', padding: '0.7rem 2.2rem', borderRadius: 24, fontWeight: 600, fontSize: 18, textDecoration: 'none', boxShadow: '0 2px 8px #0003' }}>
           {t('viewMenu')}
