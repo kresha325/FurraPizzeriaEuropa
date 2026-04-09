@@ -1,3 +1,6 @@
+import { useLanguage } from '../localization.jsx';
+
 export default function NotFound() {
-  return <h1>Faqja nuk u gjet!</h1>;
+  const { t } = useLanguage();
+  return <h1>{t('notFound')}</h1>;
 }

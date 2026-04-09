@@ -1,37 +1,38 @@
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
+import { useLanguage } from '../localization.jsx';
 import '../App.css';
-
-const menuCards = [
-  {
-    category: 'Bukë',
-    title: 'Bukë të freskëta',
-    description: 'Bukë tradicionale, e pjekur çdo ditë.',
-    image: '/FurraPizzeriaEuropa/pizza.jpeg',
-    link: '/menu?cat=buke',
-  },
-  {
-    category: 'Burek',
-    title: 'Burek të ngrohtë',
-    description: 'Burek me mish, djath ose spinaq.',
-    image: '/FurraPizzeriaEuropa/pizza.jpeg',
-    link: '/menu?cat=burek',
-  },
-  {
-    category: 'Pizza',
-    title: 'Pizza italiane',
-    description: 'Pizza me përbërës të freskët dhe recetë tradicionale.',
-    image: '/FurraPizzeriaEuropa/pizza.jpeg',
-    link: '/menu?cat=pizza',
-  },
-];
 
 export default function MenuSection() {
   const navigate = useNavigate();
+  const { t } = useLanguage();
+  const menuCards = [
+    {
+      category: 'Bukë',
+      title: t('menuCardBread'),
+      description: t('menuCardBreadDesc'),
+      image: '/FurraPizzeriaEuropa/pizza.jpeg',
+      link: '/menu?cat=buke',
+    },
+    {
+      category: 'Burek',
+      title: t('menuCardBurek'),
+      description: t('menuCardBurekDesc'),
+      image: '/FurraPizzeriaEuropa/pizza.jpeg',
+      link: '/menu?cat=burek',
+    },
+    {
+      category: 'Pizza',
+      title: t('menuCardPizza'),
+      description: t('menuCardPizzaDesc'),
+      image: '/FurraPizzeriaEuropa/pizza.jpeg',
+      link: '/menu?cat=pizza',
+    },
+  ];
   return (
     <section className="menuja-jone-modern">
-      <h2>Menuja jonë</h2>
-      <p>Zgjidh kategorinë tënde të preferuar!</p>
+      <h2>{t('menuSectionTitle')}</h2>
+      <p>{t('menuSectionDesc')}</p>
       <div className="menuja-grid">
         {menuCards.map((card, i) => (
           <div
@@ -48,7 +49,7 @@ export default function MenuSection() {
             />
             <h3>{card.title}</h3>
             <p>{card.description}</p>
-            <button>Shiko menunë</button>
+            <button>{t('menuCardBtn')}</button>
           </div>
         ))}
       </div>

@@ -1,6 +1,4 @@
 
-import { useState, useEffect } from 'react';
-import './Menu.css';
 
 // Dinamikisht përcakto rrugën e fallbackImage sipas ambientit
 const getFallbackImage = () => {
@@ -13,6 +11,7 @@ const getFallbackImage = () => {
 export default function Menu({ onAddToCart }) {
   const [products, setProducts] = useState([]);
   const [selectedCategory, setSelectedCategory] = useState('all');
+  const { t } = useLanguage();
   useEffect(() => {
     // Dinamikisht përcakto rrugën e menu.json
     const menuPath = window.location.pathname.startsWith('/FurraPizzeriaEuropa')
@@ -29,18 +28,18 @@ export default function Menu({ onAddToCart }) {
 
   return (
     <div className="menu-container">
-      <h1>Menu</h1>
-      <p className="menu-subtext">Përzgjidh sipas shijes tuaj ose gjej ushqimin tënd të parapëlqyer!</p>
+      <h1>{t('menuPageTitle')}</h1>
+      <p className="menu-subtext">{t('menuPageSub')}</p>
 
       <div style={{ marginBottom: 24, textAlign: 'center' }}>
-        <label htmlFor="category-filter" style={{ fontWeight: 600, marginRight: 8 }}>Filtro sipas kategorisë:</label>
+        <label htmlFor="category-filter" style={{ fontWeight: 600, marginRight: 8 }}>{t('filterByCategory')}</label>
         <select
           id="category-filter"
           value={selectedCategory}
           onChange={e => setSelectedCategory(e.target.value)}
           style={{ padding: '6px 18px', borderRadius: 8, fontWeight: 600, fontSize: 16 }}
         >
-          <option value="all">Të gjitha</option>
+          <option value="all">{t('allCategories')}</option>
           {categories.map(cat => (
             <option key={cat} value={cat}>{cat}</option>
           ))}
@@ -70,7 +69,7 @@ export default function Menu({ onAddToCart }) {
               <span className="product-price" style={{ margin: '0.5rem 0 0.7rem 0', display: 'block' }}>{Number(product.price).toFixed(2)}€</span>
             </div>
             <button className="add-btn" onClick={() => onAddToCart(product)}>
-              Shto në shportë
+              {t('addToCart')}
             </button>
           </div>
         ))}

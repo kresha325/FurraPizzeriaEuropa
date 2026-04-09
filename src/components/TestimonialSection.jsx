@@ -1,10 +1,11 @@
 import React from "react";
+import { useLanguage } from '../localization.jsx';
 import "./TestimonialSection.css";
 
 const testimonials = [
   {
     name: "Arben D.",
-    text: "Shërbimi ishte i shkëlqyer dhe ushqimi shumë i shijshëm!",
+    textKey: "testimonial1",
     location: "Prishtinë",
     avatar: "https://randomuser.me/api/portraits/men/32.jpg",
     social: {
@@ -14,7 +15,7 @@ const testimonials = [
   },
   {
     name: "Elira K.",
-    text: "Ambienti shumë i ngrohtë dhe stafi shumë mikpritës.",
+    textKey: "testimonial2",
     location: "Pejë",
     avatar: "https://randomuser.me/api/portraits/women/44.jpg",
     social: {
@@ -24,7 +25,7 @@ const testimonials = [
   },
   {
     name: "Blerim T.",
-    text: "Produktet janë gjithmonë të freskëta dhe të shijshme!",
+    textKey: "testimonial3",
     location: "Gjilan",
     avatar: "https://randomuser.me/api/portraits/men/65.jpg",
     social: {
@@ -56,26 +57,30 @@ const SocialIcon = ({ type }) => {
   return null;
 };
 
-const TestimonialSection = () => (
-  <section className="testimonial-section">
-    <h2>Çfarë thonë klientët tanë?</h2>
-    <div className="testimonials-list">
-      {testimonials.map((t, i) => (
-        <div className="testimonial" key={i}>
-          <a href={t.social.url} target="_blank" rel="noopener noreferrer" className="testimonial-avatar-link">
-            <img className="testimonial-avatar" src={t.avatar} alt={t.name} />
-          </a>
-          <p className="testimonial-text">“{t.text}”</p>
-          <div className="testimonial-author">
-            <strong>{t.name}</strong> — <span>{t.location}</span>
-            <a href={t.social.url} target="_blank" rel="noopener noreferrer" className="testimonial-social" title={t.social.icon}>
-              <SocialIcon type={t.social.icon} />
+
+const TestimonialSection = () => {
+  const { t } = useLanguage();
+  return (
+    <section className="testimonial-section">
+      <h2>{t('testimonialSection')}</h2>
+      <div className="testimonials-list">
+        {testimonials.map((test, i) => (
+          <div className="testimonial" key={i}>
+            <a href={test.social.url} target="_blank" rel="noopener noreferrer" className="testimonial-avatar-link">
+              <img className="testimonial-avatar" src={test.avatar} alt={test.name} />
             </a>
+            <p className="testimonial-text">“{t(test.textKey)}”</p>
+            <div className="testimonial-author">
+              <strong>{test.name}</strong> — <span>{test.location}</span>
+              <a href={test.social.url} target="_blank" rel="noopener noreferrer" className="testimonial-social" title={test.social.icon}>
+                <SocialIcon type={test.social.icon} />
+              </a>
+            </div>
           </div>
-        </div>
-      ))}
-    </div>
-  </section>
-);
+        ))}
+      </div>
+    </section>
+  );
+};
 
 export default TestimonialSection;

@@ -1,21 +1,23 @@
 import './Cart.css';
+import { useLanguage } from '../localization.jsx';
 
 export default function Cart({ cart, onRemove, onIncrement, onDecrement }) {
+  const { t } = useLanguage();
   const total = cart.reduce((sum, item) => sum + item.price * item.qty, 0);
 
   const orderText = [
-    'Porosi nga Web',
+    t('orderFromWeb'),
     ...cart.map((item) => `${item.name} x${item.qty}`),
     '',
-    `Totali: ${total.toFixed(2)}€`
+    `${t('total')}: ${total.toFixed(2)}€`
   ].join('\n');
   const encoded = encodeURIComponent(orderText);
 
   return (
     <div className="cart-container">
-      <h1>Shporta</h1>
+      <h1>{t('cartTitle')}</h1>
       {cart.length === 0 ? (
-        <p>Shporta është bosh.</p>
+        <p>{t('cartEmpty')}</p>
       ) : (
         <ul className="cart-list">
           {cart.map((item) => (
@@ -35,12 +37,12 @@ export default function Cart({ cart, onRemove, onIncrement, onDecrement }) {
                 <button onClick={() => onIncrement(item.id)}>+</button>
               </div>
               <span>{(item.price * item.qty).toFixed(2)}€</span>
-              <button className="remove-btn" onClick={() => onRemove(item.id)}>Hiq</button>
+              <button className="remove-btn" onClick={() => onRemove(item.id)}>{t('remove')}</button>
             </li>
           ))}
         </ul>
       )}
-      <h3>Totali: {total.toFixed(2)}€</h3>
+      <h3>{t('total')}: {total.toFixed(2)}€</h3>
       <div className="order-actions">
         <a
           className="order-btn whatsapp"
@@ -49,21 +51,21 @@ export default function Cart({ cart, onRemove, onIncrement, onDecrement }) {
           rel="noopener noreferrer"
           disabled={cart.length === 0}
         >
-          Dërgo në WhatsApp
+          {t('sendWhatsapp')}
         </a>
         <a
           className="order-btn sms"
           href={`sms:38349591200?body=${encoded}`}
           disabled={cart.length === 0}
         >
-          Dërgo me SMS
+          {t('sendSMS')}
         </a>
         <a
           className="order-btn viber"
           href={`viber://forward?text=${encoded}`}
           disabled={cart.length === 0}
         >
-          Dërgo në Viber
+          {t('sendViber')}
         </a>
       </div>
     </div>
