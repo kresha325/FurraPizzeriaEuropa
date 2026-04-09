@@ -1,13 +1,14 @@
 
 import React, { useState, useEffect } from 'react';
 import { useLanguage } from '../localization.jsx';
+import './Menu.css';
 
 // Dinamikisht përcakto rrugën e fallbackImage sipas ambientit
 const getFallbackImage = () => {
   if (window.location.pathname.startsWith('/FurraPizzeriaEuropa')) {
-    return '/FurraPizzeriaEuropa/pizza.jpeg';
+    return '/FurraPizzeriaEuropa/images/pizza.jpeg';
   }
-  return '/pizza.jpeg';
+  return '/images/pizza.jpeg';
 };
 
 export default function Menu({ onAddToCart }) {
@@ -50,29 +51,32 @@ export default function Menu({ onAddToCart }) {
 
       <div className="product-list">
         {filteredProducts.map((product) => (
-          <div className="product-card" key={product.id}>
-            <img
-              src={product.image ? product.image : getFallbackImage()}
-              alt={product.name}
-              className="product-img"
-              width={80}
-              height={80}
-              style={{ objectFit: 'cover', borderRadius: '8px', marginRight: '1rem' }}
-              onError={e => {
-                const fallback = getFallbackImage();
-                if (e.target.src !== window.location.origin + fallback && e.target.src !== fallback) {
-                  e.target.onerror = null;
-                  e.target.src = fallback;
-                }
-              }}
-            />
-            <div className="product-info" style={{ width: '100%', display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
-              <span className="product-name">{product.name}</span>
-              <span className="product-price" style={{ margin: '0.5rem 0 0.7rem 0', display: 'block' }}>{Number(product.price).toFixed(2)}€</span>
+          <div className="product-card modern" key={product.id}>
+            <div className="product-img-top">
+              <img
+                src={product.image ? product.image : getFallbackImage()}
+                alt={product.name}
+                className="product-img-modern"
+                onError={e => {
+                  const fallback = getFallbackImage();
+                  if (e.target.src !== window.location.origin + fallback && e.target.src !== fallback) {
+                    e.target.onerror = null;
+                    e.target.src = fallback;
+                  }
+                }}
+              />
             </div>
-            <button className="add-btn" onClick={() => onAddToCart(product)}>
-              {t('addToCart')}
-            </button>
+            <div className="product-card-bottom">
+              <div className="product-btn-circle">
+                <button className="add-btn-circle" onClick={() => onAddToCart(product)}>
+                  <span className="cart-icon" aria-hidden="true">🛒</span>
+                </button>
+              </div>
+              <div className="product-info-modern">
+                <span className="product-name-modern">{product.name}</span>
+                <span className="product-price-modern">{Number(product.price).toFixed(2)}€</span>
+              </div>
+            </div>
           </div>
         ))}
       </div>
