@@ -3,6 +3,7 @@ import { useLanguage } from '../localization.jsx';
 
 export default function Cart({ cart, onRemove, onIncrement, onDecrement }) {
   const { t } = useLanguage();
+  const businessPhone = '38349591200';
   const total = cart.reduce((sum, item) => sum + item.price * item.qty, 0);
 
   const orderText = [
@@ -46,7 +47,7 @@ export default function Cart({ cart, onRemove, onIncrement, onDecrement }) {
       <div className="order-actions">
         <a
           className="order-btn whatsapp"
-          href={`https://wa.me/38349591200?text=${encoded}`}
+          href={`https://wa.me/${businessPhone}?text=${encoded}`}
           target="_blank"
           rel="noopener noreferrer"
           disabled={cart.length === 0}
@@ -55,17 +56,10 @@ export default function Cart({ cart, onRemove, onIncrement, onDecrement }) {
         </a>
         <a
           className="order-btn sms"
-          href={`sms:38349591200?body=${encoded}`}
+          href={`sms:${businessPhone}?body=${encoded}`}
           disabled={cart.length === 0}
         >
           {t('sendSMS')}
-        </a>
-        <a
-          className="order-btn viber"
-          href={`viber://forward?text=${encoded}`}
-          disabled={cart.length === 0}
-        >
-          {t('sendViber')}
         </a>
       </div>
     </div>

@@ -44,9 +44,11 @@
   background: #c0392b;
 }
 .order-actions {
-  display: flex;
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
   gap: 1rem;
   margin-top: 1.5rem;
+  width: 100%;
 }
 .order-btn {
   padding: 0.6rem 1.2rem;
@@ -56,7 +58,12 @@
   font-weight: bold;
   font-size: 1rem;
   transition: background 0.2s;
-  display: inline-block;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  box-sizing: border-box;
+  text-align: center;
 }
 .order-btn.whatsapp {
   background: #25d366;
@@ -70,9 +77,9 @@
 .order-btn.sms:hover {
   background: #1e40af;
 }
-.order-btn.viber {
-  background: #8f5db7;
-}
-.order-btn.viber:hover {
-  background: #5f3a87;
+
+@media (max-width: 640px) {
+  .order-actions {
+    grid-template-columns: 1fr;
+  }
 }
