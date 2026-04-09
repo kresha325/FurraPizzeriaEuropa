@@ -2,6 +2,7 @@
 
 import AppRouter from './router';
 import { ThemeProvider } from './theme-context.jsx';
+import { LanguageProvider } from './localization.jsx';
 import { useEffect } from 'react';
 
 
@@ -19,8 +20,10 @@ export default function App() {
     }
   }, []);
   return (
-    <ThemeProvider>
-      <AppRouter />
-    </ThemeProvider>
+    <LanguageProvider>
+      <ThemeProvider>
+        <AppRouter />
+      </ThemeProvider>
+    </LanguageProvider>
   );
 }

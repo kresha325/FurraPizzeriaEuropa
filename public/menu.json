@@ -30,8 +30,8 @@
   { "id": 29, "name": "Sendviç me bukë të bardhë", "price": 1.20, "category": "Speciale", "image": "/FurraPizzeriaEuropa/pizza.jpeg" },
   { "id": 30, "name": "Sendviç dijetal", "price": 1.50, "category": "Speciale", "image": "/FurraPizzeriaEuropa/pizza.jpeg" },
   { "id": 31, "name": "Fli", "price": 1.50, "category": "Speciale", "image": "/FurraPizzeriaEuropa/pizza.jpeg" },
-  { "id": 32, "name": "Picë Proshut", "price": 1.50, "category": "Pizza", "image": "/FurraPizzeriaEuropa/pizza.jpeg" },
-  { "id": 33, "name": "Picë me suxhuk", "price": 1.50, "category": "Pizza", "image": "/FurraPizzeriaEuropa/pizza.jpeg" },
-  { "id": 34, "name": "Picë me sallam", "price": 1.20, "category": "Pizza", "image": "/FurraPizzeriaEuropa/pizza.jpeg" },
+  { "id": 32, "name": "Picë pjesë proshut", "price": 1.50, "category": "Pizza", "image": "/FurraPizzeriaEuropa/pizza.jpeg" },
+  { "id": 33, "name": "Picë pjesë suxhuk", "price": 1.50, "category": "Pizza", "image": "/FurraPizzeriaEuropa/pizza.jpeg" },
+  { "id": 34, "name": "Picë pjesë sallam", "price": 1.20, "category": "Pizza", "image": "/FurraPizzeriaEuropa/pizza.jpeg" },
   { "id": 35, "name": "Tortilla me mish pule", "price": 2.00, "category": "Speciale", "image": "/FurraPizzeriaEuropa/pizza.jpeg" }
 ]
