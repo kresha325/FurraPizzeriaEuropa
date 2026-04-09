@@ -1,9 +1,8 @@
 
 import React, { useState, useEffect } from 'react';
 import { useLanguage } from '../localization.jsx';
+import { getPublicAssetPath } from '../utils/publicAssetPath.js';
 import './Menu.css';
-
-const getPublicAssetPath = (path) => `${import.meta.env.BASE_URL}${path.replace(/^\/+/, '')}`;
 
 const getFallbackImage = () => getPublicAssetPath('images/pizza.jpeg');
 

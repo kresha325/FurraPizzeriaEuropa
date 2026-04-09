@@ -1,9 +1,8 @@
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useLanguage } from '../localization.jsx';
+import { getPublicAssetPath } from '../utils/publicAssetPath.js';
 import '../App.css';
-
-const getPublicAssetPath = (path) => `${import.meta.env.BASE_URL}${path.replace(/^\/+/, '')}`;
 
 export default function MenuSection() {
   const navigate = useNavigate();

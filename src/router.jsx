@@ -6,6 +6,7 @@ import Header from './pages/Header';
 import Navbar from './pages/Navbar';
 import BottomNavbar from '../src/components/BottomNavbar.jsx';
 import { useState } from 'react';
+import { getBasePath } from './utils/publicAssetPath.js';
 
 
 function HeaderOrNavbar({ cartCount }) {
@@ -16,6 +17,7 @@ function HeaderOrNavbar({ cartCount }) {
 
 export default function AppRouter() {
   const [cart, setCart] = useState([]);
+  const basePath = getBasePath();
 
   const handleAddToCart = (product) => {
     setCart((prev) => {
@@ -51,7 +53,7 @@ export default function AppRouter() {
 
 
   return (
-    <Router basename="/FurraPizzeriaEuropa">
+    <Router basename={basePath}>
       <>
         <HeaderOrNavbar cartCount={cart.length} />
         <div style={{ minHeight: '60vh' }}>
