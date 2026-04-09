@@ -40,6 +40,10 @@ const translations = {
     testimonial1: 'Shërbimi ishte i shkëlqyer dhe ushqimi shumë i shijshëm!',
     testimonial2: 'Ambienti shumë i ngrohtë dhe stafi shumë mikpritës.',
     testimonial3: 'Produktet janë gjithmonë të freskëta dhe të shijshme!',
+    address: 'Adresa',
+    email: 'Email',
+    phone: 'Tel/WhatsApp/Viber',
+    followUs: 'Na ndiqni:',
   },
   en: {
     home: 'Home',
@@ -80,6 +84,10 @@ const translations = {
     testimonial1: 'The service was excellent and the food very tasty!',
     testimonial2: 'Very warm environment and very welcoming staff.',
     testimonial3: 'Products are always fresh and delicious!',
+    address: 'Address',
+    email: 'Email',
+    phone: 'Phone/WhatsApp/Viber',
+    followUs: 'Follow us:',
   },
 };
 

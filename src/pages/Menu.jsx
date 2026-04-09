@@ -1,4 +1,6 @@
 
+import React, { useState, useEffect } from 'react';
+import { useLanguage } from '../localization.jsx';
 
 // Dinamikisht përcakto rrugën e fallbackImage sipas ambientit
 const getFallbackImage = () => {

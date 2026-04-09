@@ -1,8 +1,10 @@
 
 import React from 'react';
 import logo from '../assets/logo.png';
+import { useLanguage } from '../localization.jsx';
 
 export default function Footer() {
+  const { t, lang } = useLanguage();
   return (
     <footer style={{ background: '#222', color: '#fff', padding: '2rem 0', marginTop: '2rem' }}>
       <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', maxWidth: 1200, margin: '0 auto', flexWrap: 'wrap', gap: '2rem' }}>
@@ -10,21 +12,21 @@ export default function Footer() {
         <div style={{ flex: 1, minWidth: 220 }}>
           <div style={{ display: 'flex', alignItems: 'center', gap: '1rem', marginBottom: 8 }}>
             <img src={logo} alt="Europa Logo" style={{ width: 60, height: 60, borderRadius: 8, background: 'none' }} />
-            <span style={{ fontWeight: 'bold', fontSize: 20, textShadow: '0 2px 8px #000, 0 4px 16px #000a' }}>Furra & Piceria Europa</span>
+            <span style={{ fontWeight: 'bold', fontSize: 20, textShadow: '0 2px 8px #000, 0 4px 16px #000a' }}>Europa</span>
           </div>
           <div style={{ fontSize: 15, marginBottom: 4 }}>
-            Adresa: <a href="https://www.google.com/maps/search/?api=1&query=85+Ibrahim+Rugova,+Grackë+14000" target="_blank" rel="noopener noreferrer" style={{ color: '#fff', textDecoration: 'underline' }}>
+            {t('address')}: <a href="https://www.google.com/maps/search/?api=1&query=85+Ibrahim+Rugova,+Grackë+14000" target="_blank" rel="noopener noreferrer" style={{ color: '#fff', textDecoration: 'underline' }}>
               85 Ibrahim Rugova, Grackë 14000
             </a>
           </div>
-          <div style={{ fontSize: 15, marginBottom: 4 }}>Email: <a href="mailto:furrapizzeria.europa@icloud.com" style={{ color: '#fff' }}>furrapizzeria.europa@icloud.com</a></div>
+          <div style={{ fontSize: 15, marginBottom: 4 }}>{t('email')}: <a href="mailto:furrapizzeria.europa@icloud.com" style={{ color: '#fff' }}>furrapizzeria.europa@icloud.com</a></div>
           <div style={{ fontSize: 15 }}>
-            Tel/WhatsApp/Viber: <a href="https://wa.me/38344123456" style={{ color: '#25d366' }}>+383 44 123 456</a>
+            {t('phone')}: <a href="https://wa.me/38344123456" style={{ color: '#25d366' }}>+383 44 123 456</a>
           </div>
         </div>
         {/* Center: Socials */}
         <div style={{ flex: 1, minWidth: 180, textAlign: 'center' }}>
-          <div style={{ fontWeight: 'bold', marginBottom: 8 }}>Na ndiqni:</div>
+          <div style={{ fontWeight: 'bold', marginBottom: 8 }}>{t('followUs')}</div>
           <div style={{ display: 'flex', justifyContent: 'center', gap: 18 }}>
             <a
               href="https://www.facebook.com/profile.php?id=61575473878653"
