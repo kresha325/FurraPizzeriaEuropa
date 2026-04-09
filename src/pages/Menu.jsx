@@ -3,23 +3,18 @@ import React, { useState, useEffect } from 'react';
 import { useLanguage } from '../localization.jsx';
 import './Menu.css';
 
-// Dinamikisht përcakto rrugën e fallbackImage sipas ambientit
-const getFallbackImage = () => {
-  if (window.location.pathname.startsWith('/FurraPizzeriaEuropa')) {
-    return '/FurraPizzeriaEuropa/images/pizza.jpeg';
-  }
-  return '/images/pizza.jpeg';
-};
+const getPublicAssetPath = (path) => `${import.meta.env.BASE_URL}${path.replace(/^\/+/, '')}`;
+
+const getFallbackImage = () => getPublicAssetPath('images/pizza.jpeg');
 
 export default function Menu({ onAddToCart }) {
   const [products, setProducts] = useState([]);
   const [selectedCategory, setSelectedCategory] = useState('all');
   const { t } = useLanguage();
+
   useEffect(() => {
-    // Dinamikisht përcakto rrugën e menu.json
-    const menuPath = window.location.pathname.startsWith('/FurraPizzeriaEuropa')
-      ? '/FurraPizzeriaEuropa/menu.json'
-      : '/menu.json';
+    const menuPath = getPublicAssetPath('menu.json');
+
     fetch(menuPath)
       .then((res) => res.json())
       .then((data) => setProducts(data));

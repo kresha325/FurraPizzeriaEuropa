@@ -3,29 +3,33 @@ import { useNavigate } from 'react-router-dom';
 import { useLanguage } from '../localization.jsx';
 import '../App.css';
 
+const getPublicAssetPath = (path) => `${import.meta.env.BASE_URL}${path.replace(/^\/+/, '')}`;
+
 export default function MenuSection() {
   const navigate = useNavigate();
   const { t } = useLanguage();
+  const cardImage = getPublicAssetPath('images/pizza.jpeg');
+
   const menuCards = [
     {
       category: 'Bukë',
       title: t('menuCardBread'),
       description: t('menuCardBreadDesc'),
-      image: '/FurraPizzeriaEuropa/pizza.jpeg',
+      image: cardImage,
       link: '/menu?cat=buke',
     },
     {
       category: 'Burek',
       title: t('menuCardBurek'),
       description: t('menuCardBurekDesc'),
-      image: '/FurraPizzeriaEuropa/pizza.jpeg',
+      image: cardImage,
       link: '/menu?cat=burek',
     },
     {
       category: 'Pizza',
       title: t('menuCardPizza'),
       description: t('menuCardPizzaDesc'),
-      image: '/FurraPizzeriaEuropa/pizza.jpeg',
+      image: cardImage,
       link: '/menu?cat=pizza',
     },
   ];
@@ -45,7 +49,7 @@ export default function MenuSection() {
             <img
               src={card.image}
               alt={card.title}
-              onError={e => { e.target.onerror = null; e.target.src = '/FurraPizzeriaEuropa/pizza.jpeg'; }}
+              onError={e => { e.target.onerror = null; e.target.src = cardImage; }}
             />
             <h3>{card.title}</h3>
             <p>{card.description}</p>
