@@ -21,7 +21,7 @@ export default function Footer() {
           </div>
           <div style={{ fontSize: 15, marginBottom: 4 }}>{t('email')}: <a href="mailto:furrapizzeria.europa@icloud.com" style={{ color: '#fff' }}>furrapizzeria.europa@icloud.com</a></div>
           <div style={{ fontSize: 15 }}>
-            {t('phone')}: <a href="https://wa.me/38344123456" style={{ color: '#25d366' }}>+383 44 123 456</a>
+            {t('phone')}: <a href="https://wa.me/38349591200" style={{ color: '#25d366' }}>+38349591200</a>
           </div>
         </div>
         {/* Center: Socials */}
