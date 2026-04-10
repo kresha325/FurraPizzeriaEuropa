@@ -2,6 +2,7 @@
 import { Link } from 'react-router-dom';
 import FeaturedProductsSection from '../components/FeaturedProductsSection.jsx';
 import MenuSection from '../components/MenuSection.jsx';
+import ScrollToTopButton from '../components/ScrollToTopButton.jsx';
 import TestimonialSection from '../components/TestimonialSection.jsx';
 import { useLanguage } from '../localization.jsx';
 
@@ -37,6 +38,8 @@ export default function Home() {
           ))}
         </p>
       </section>
+
+      <ScrollToTopButton />
     </div>
   );
 }

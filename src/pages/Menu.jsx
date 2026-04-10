@@ -1,6 +1,7 @@
 
 import React, { useEffect, useRef, useState } from 'react';
 import menuItems from '../menu.json';
+import ScrollToTopButton from '../components/ScrollToTopButton.jsx';
 import { useLanguage } from '../localization.jsx';
 import { getFallbackProductImage, resolveProductImage } from '../utils/resolveProductImage.js';
 import './Menu.css';
@@ -240,6 +241,8 @@ export default function Menu({ onAddToCart, onDecrement, cart = [] }) {
           </div>
         )})}
       </div>
+
+      <ScrollToTopButton />
     </div>
   );
 }
