@@ -46,6 +46,15 @@ export default function Menu({ onAddToCart, onDecrement, cart = [] }) {
     showToast(`${product.name} u hoq nga shporta`, 'warning');
   };
 
+  const handleProductCardClick = (event, product, isSelected) => {
+    if (isSelected) {
+      return;
+    }
+
+    event.preventDefault();
+    handleAddFromMenu(product);
+  };
+
   return (
     <div className="menu-container">
       {toast && (
@@ -93,12 +102,30 @@ export default function Menu({ onAddToCart, onDecrement, cart = [] }) {
                 }}
               />
             </div>
-            <div className="product-card-bottom">
+            <div
+              className={`product-card-bottom${!isSelected ? ' is-clickable' : ''}`}
+              onClick={(event) => handleProductCardClick(event, product, isSelected)}
+              onKeyDown={(event) => {
+                if (isSelected) {
+                  return;
+                }
+
+                if (event.key === 'Enter' || event.key === ' ') {
+                  handleProductCardClick(event, product, isSelected);
+                }
+              }}
+              role={!isSelected ? 'button' : undefined}
+              tabIndex={!isSelected ? 0 : -1}
+              aria-label={!isSelected ? `${product.name}, shto ne shporte` : undefined}
+            >
               <div className="product-btn-circle">
                 {isSelected && (
                   <button
                     className="cart-adjust-btn remove"
-                    onClick={() => handleRemoveFromMenu(product)}
+                    onClick={(event) => {
+                      event.stopPropagation();
+                      handleRemoveFromMenu(product);
+                    }}
                     aria-label={`Hiq nje ${product.name} nga shporta`}
                     type="button"
                   >
@@ -107,9 +134,16 @@ export default function Menu({ onAddToCart, onDecrement, cart = [] }) {
                 )}
                 <button
                   className={`add-btn-circle${isSelected ? ' is-selected' : ''}`}
-                  onClick={() => handleAddFromMenu(product)}
+                  onClick={(event) => {
+                    event.stopPropagation();
+
+                    if (!isSelected) {
+                      handleAddFromMenu(product);
+                    }
+                  }}
                   aria-label={isSelected ? `${product.name}, ${quantityInCart} ne shporte` : `${product.name}, shto ne shporte`}
                   type="button"
+                  disabled={isSelected}
                 >
                   <span className="cart-icon" aria-hidden="true">🛒</span>
                   {quantityInCart > 0 && <span className="cart-qty-badge">{quantityInCart}</span>}
@@ -117,7 +151,10 @@ export default function Menu({ onAddToCart, onDecrement, cart = [] }) {
                 {isSelected && (
                   <button
                     className="cart-adjust-btn add"
-                    onClick={() => handleAddFromMenu(product)}
+                    onClick={(event) => {
+                      event.stopPropagation();
+                      handleAddFromMenu(product);
+                    }}
                     aria-label={`Shto edhe nje ${product.name} ne shporte`}
                     type="button"
                   >

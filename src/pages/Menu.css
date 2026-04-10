@@ -95,6 +95,19 @@
   position: relative;
   padding-bottom: 1.2rem;
 }
+.product-card-bottom.is-clickable {
+  cursor: pointer;
+}
+.product-card-bottom.is-clickable:hover .add-btn-circle,
+.product-card-bottom.is-clickable:focus-visible .add-btn-circle {
+  background: linear-gradient(135deg, #fef3c7 60%, #fff 100%);
+  transform: scale(1.08);
+  box-shadow: 0 8px 32px #a96b4a33;
+}
+.product-card-bottom.is-clickable:focus-visible {
+  outline: 3px solid #ffe6b8;
+  outline-offset: -3px;
+}
 .product-btn-circle {
   position: absolute;
   left: 50%;
@@ -132,6 +145,9 @@
   color: #7b3f1d;
   box-shadow: 0 10px 26px #f59e0b55;
   animation: addBounce 0.28s ease;
+}
+.add-btn-circle:disabled {
+  cursor: default;
 }
 .cart-adjust-btn {
   width: 38px;
