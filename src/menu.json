@@ -3,7 +3,7 @@
   { "id": 2, "name": "Buka thekne", "price": 0.60, "category": "Bukë", "image": "pizza.jpeg" },
   { "id": 3, "name": "Buka e zezë", "price": 0.80, "category": "Bukë", "image": "pizza.jpeg" },
   { "id": 4, "name": "Bukë Misri", "price": 1.00, "category": "Bukë", "image": "pizza.jpeg" },
-  { "id": 5, "name": "Burek me mish", "price": 1.50, "category": "Burek", "image": "Burek_m.jpeg" },
+  { "id": 5, "name": "Burek me mish", "price": 1.50, "category": "Burek", "image": "burek_mish.jpeg" },
   { "id": 6, "name": "Burek me djath", "price": 1.50, "category": "Burek", "image": "Burek_djath.jpeg" },
   { "id": 7, "name": "Burek me spinaq", "price": 1.50, "category": "Burek", "image": "burek_spinaq.jpeg" },
   { "id": 8, "name": "Mantia me mish", "price": 0.25, "category": "Peciva", "image": "mantia_mish.jpeg" },
