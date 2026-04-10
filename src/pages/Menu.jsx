@@ -1,23 +1,18 @@
 
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
+import menuItems from '../menu.json';
 import { useLanguage } from '../localization.jsx';
-import { getPublicAssetPath } from '../utils/publicAssetPath.js';
+import { getFallbackProductImage, resolveProductImage } from '../utils/resolveProductImage.js';
 import './Menu.css';
 
-const getFallbackImage = () => getPublicAssetPath('images/pizza.jpeg');
-
 export default function Menu({ onAddToCart }) {
-  const [products, setProducts] = useState([]);
   const [selectedCategory, setSelectedCategory] = useState('all');
   const { t } = useLanguage();
 
-  useEffect(() => {
-    const menuPath = getPublicAssetPath('menu.json');
-
-    fetch(menuPath)
-      .then((res) => res.json())
-      .then((data) => setProducts(data));
-  }, []);
+  const products = menuItems.map((product) => ({
+    ...product,
+    image: resolveProductImage(product.image),
+  }));
 
   // Merr kategoritë unike
   const categories = Array.from(new Set(products.map(p => p.category)));
@@ -48,11 +43,11 @@ export default function Menu({ onAddToCart }) {
           <div className="product-card modern" key={product.id}>
             <div className="product-img-top">
               <img
-                src={product.image ? product.image : getFallbackImage()}
+                src={product.image ? product.image : getFallbackProductImage()}
                 alt={product.name}
                 className="product-img-modern"
                 onError={e => {
-                  const fallback = getFallbackImage();
+                  const fallback = getFallbackProductImage();
                   if (e.target.src !== window.location.origin + fallback && e.target.src !== fallback) {
                     e.target.onerror = null;
                     e.target.src = fallback;
