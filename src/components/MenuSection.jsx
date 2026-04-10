@@ -43,16 +43,31 @@ export default function MenuSection() {
             className="menuja-card"
             onClick={() => navigate(card.link)}
             tabIndex={0}
-            onKeyDown={e => { if (e.key === 'Enter') navigate(card.link); }}
+            role="button"
+            onKeyDown={e => {
+              if (e.key === 'Enter' || e.key === ' ') {
+                e.preventDefault();
+                navigate(card.link);
+              }
+            }}
           >
-            <img
-              src={card.image}
-              alt={card.title}
-              onError={e => { e.target.onerror = null; e.target.src = cardImage; }}
-            />
-            <h3>{card.title}</h3>
-            <p>{card.description}</p>
-            <button>{t('menuCardBtn')}</button>
+            <div className="menuja-card-image-wrap">
+              <img
+                src={card.image}
+                alt={card.title}
+                onError={e => { e.target.onerror = null; e.target.src = cardImage; }}
+              />
+            </div>
+            <div className="menuja-card-bottom">
+              <div className="menuja-card-cta" aria-hidden="true">
+                <span>{t('menuCardBtn')}</span>
+              </div>
+              <div className="menuja-card-content">
+                <span className="menuja-card-category">{card.category}</span>
+                <h3>{card.title}</h3>
+                <p>{card.description}</p>
+              </div>
+            </div>
           </div>
         ))}
       </div>

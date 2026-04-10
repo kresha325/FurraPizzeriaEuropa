@@ -1,5 +1,6 @@
 
 import { Link } from 'react-router-dom';
+import FeaturedProductsSection from '../components/FeaturedProductsSection.jsx';
 import MenuSection from '../components/MenuSection.jsx';
 import TestimonialSection from '../components/TestimonialSection.jsx';
 import { useLanguage } from '../localization.jsx';
@@ -20,13 +21,7 @@ export default function Home() {
       {/* Testimonial Section */}
       <TestimonialSection />
 
-      {/* Menu Section */}
-      <section style={{ padding: '2rem 0', background: '#f0f0f0' }}>
-        <h2>{t('menu')}</h2>
-        <p>
-          {t('viewMenu')}: <Link to="/menu" style={{ color: '#b22222', textDecoration: 'underline' }}>{t('menu')}</Link>
-        </p>
-      </section>
+      <FeaturedProductsSection />
 
       {/* Contact Section */}
       <section style={{ padding: '2rem 0', maxWidth: 800, margin: '0 auto' }}>

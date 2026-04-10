@@ -66,15 +66,25 @@ const TestimonialSection = () => {
       <div className="testimonials-list">
         {testimonials.map((test, i) => (
           <div className="testimonial" key={i}>
-            <a href={test.social.url} target="_blank" rel="noopener noreferrer" className="testimonial-avatar-link">
-              <img className="testimonial-avatar" src={test.avatar} alt={test.name} />
-            </a>
-            <p className="testimonial-text">“{t(test.textKey)}”</p>
-            <div className="testimonial-author">
-              <strong>{test.name}</strong> — <span>{test.location}</span>
-              <a href={test.social.url} target="_blank" rel="noopener noreferrer" className="testimonial-social" title={test.social.icon}>
-                <SocialIcon type={test.social.icon} />
+            <div className="testimonial-top">
+              <a href={test.social.url} target="_blank" rel="noopener noreferrer" className="testimonial-avatar-link">
+                <img className="testimonial-avatar" src={test.avatar} alt={test.name} />
               </a>
+            </div>
+            <div className="testimonial-bottom">
+              <div className="testimonial-social-badge" aria-hidden="true">
+                <SocialIcon type={test.social.icon} />
+              </div>
+              <div className="testimonial-content">
+                <p className="testimonial-text">“{t(test.textKey)}”</p>
+                <div className="testimonial-author">
+                  <strong>{test.name}</strong>
+                  <span>{test.location}</span>
+                </div>
+                <a href={test.social.url} target="_blank" rel="noopener noreferrer" className="testimonial-social" title={test.social.icon}>
+                  View profile
+                </a>
+              </div>
             </div>
           </div>
         ))}

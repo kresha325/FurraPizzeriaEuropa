@@ -1,5 +1,5 @@
 
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import menuItems from '../menu.json';
 import { useLanguage } from '../localization.jsx';
 import { getFallbackProductImage, resolveProductImage } from '../utils/resolveProductImage.js';
@@ -8,6 +8,8 @@ import './Menu.css';
 export default function Menu({ onAddToCart, onDecrement, cart = [] }) {
   const [selectedCategory, setSelectedCategory] = useState('all');
   const [toast, setToast] = useState(null);
+  const [centeredMobileProductId, setCenteredMobileProductId] = useState(null);
+  const productCardRefs = useRef(new Map());
   const { t } = useLanguage();
 
   useEffect(() => {
@@ -31,6 +33,59 @@ export default function Menu({ onAddToCart, onDecrement, cart = [] }) {
   const categories = Array.from(new Set(products.map(p => p.category)));
   const filteredProducts = selectedCategory === 'all' ? products : products.filter(p => p.category === selectedCategory);
   const cartQuantityByProductId = new Map(cart.map((item) => [item.id, item.qty]));
+
+  useEffect(() => {
+    if (typeof window === 'undefined') {
+      return undefined;
+    }
+
+    let animationFrameId = 0;
+
+    const updateCenteredMobileCard = () => {
+      if (window.innerWidth > 900) {
+        setCenteredMobileProductId(null);
+        return;
+      }
+
+      const viewportCenter = window.innerHeight / 2;
+      let nearestProductId = null;
+      let nearestDistance = Number.POSITIVE_INFINITY;
+
+      productCardRefs.current.forEach((node, productId) => {
+        if (!node) {
+          return;
+        }
+
+        const rect = node.getBoundingClientRect();
+        const cardCenter = rect.top + (rect.height / 2);
+        const distance = Math.abs(cardCenter - viewportCenter);
+
+        if (distance < nearestDistance) {
+          nearestDistance = distance;
+          nearestProductId = productId;
+        }
+      });
+
+      setCenteredMobileProductId((currentId) => (
+        currentId === nearestProductId ? currentId : nearestProductId
+      ));
+    };
+
+    const scheduleCenteredMobileCardUpdate = () => {
+      window.cancelAnimationFrame(animationFrameId);
+      animationFrameId = window.requestAnimationFrame(updateCenteredMobileCard);
+    };
+
+    scheduleCenteredMobileCardUpdate();
+    window.addEventListener('scroll', scheduleCenteredMobileCardUpdate, { passive: true });
+    window.addEventListener('resize', scheduleCenteredMobileCardUpdate);
+
+    return () => {
+      window.cancelAnimationFrame(animationFrameId);
+      window.removeEventListener('scroll', scheduleCenteredMobileCardUpdate);
+      window.removeEventListener('resize', scheduleCenteredMobileCardUpdate);
+    };
+  }, [filteredProducts]);
 
   const showToast = (message, tone) => {
     setToast({ message, tone });
@@ -85,9 +140,20 @@ export default function Menu({ onAddToCart, onDecrement, cart = [] }) {
         {filteredProducts.map((product) => {
           const quantityInCart = cartQuantityByProductId.get(product.id) ?? 0;
           const isSelected = quantityInCart > 0;
+          const shouldShowMobileAddLabel = !isSelected && centeredMobileProductId === product.id;
 
           return (
-          <div className={`product-card modern${isSelected ? ' product-card-selected' : ''}`} key={product.id}>
+          <div
+            className={`product-card modern${isSelected ? ' product-card-selected' : ''}`}
+            key={product.id}
+            ref={(node) => {
+              if (node) {
+                productCardRefs.current.set(product.id, node);
+              } else {
+                productCardRefs.current.delete(product.id);
+              }
+            }}
+          >
             <div className="product-img-top">
               <img
                 src={product.image ? product.image : getFallbackProductImage()}
@@ -133,7 +199,7 @@ export default function Menu({ onAddToCart, onDecrement, cart = [] }) {
                   </button>
                 )}
                 <button
-                  className={`add-btn-circle${isSelected ? ' is-selected' : ''}`}
+                  className={`add-btn-circle${isSelected ? ' is-selected' : ''}${shouldShowMobileAddLabel ? ' has-text' : ''}`}
                   onClick={(event) => {
                     event.stopPropagation();
 
@@ -145,7 +211,8 @@ export default function Menu({ onAddToCart, onDecrement, cart = [] }) {
                   type="button"
                   disabled={isSelected}
                 >
-                  <span className="cart-icon" aria-hidden="true">🛒</span>
+                  <span className={`cart-icon${shouldShowMobileAddLabel ? ' is-hidden-on-mobile' : ''}`} aria-hidden="true">🛒</span>
+                  {shouldShowMobileAddLabel && <span className="cart-label-mobile">{t('addShort')}</span>}
                   {quantityInCart > 0 && <span className="cart-qty-badge">{quantityInCart}</span>}
                 </button>
                 {isSelected && (
