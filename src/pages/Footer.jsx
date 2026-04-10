@@ -109,16 +109,50 @@ export default function Footer() {
         </div>
         {/* Right: Google Map */}
         <div style={{ flex: 1, minWidth: 260, textAlign: 'right' }}>
-          <iframe
-            title="Europa Location"
-            src="https://www.google.com/maps?q=42.5090158,21.1122287&z=17&output=embed"
-            width="100%"
-            height="160"
-            style={{ border: 0, borderRadius: 8 }}
-            allowFullScreen=""
-            loading="lazy"
-            referrerPolicy="no-referrer-when-downgrade"
-          ></iframe>
+          <a
+            href="https://www.google.com/maps/search/?api=1&query=42.5090158,21.1122287"
+            target="_blank"
+            rel="noopener noreferrer"
+            aria-label={t('openMap')}
+            style={{
+              display: 'flex',
+              flexDirection: 'column',
+              justifyContent: 'space-between',
+              minHeight: 160,
+              padding: '1rem',
+              borderRadius: 16,
+              background: 'linear-gradient(135deg, #fff8eb 0%, #fef3c7 100%)',
+              color: '#2d1b0e',
+              textDecoration: 'none',
+              boxShadow: '0 10px 24px #00000024',
+              border: '1px solid #ffffff1f',
+              textAlign: 'left',
+            }}
+          >
+            <div>
+              <div style={{ fontWeight: 'bold', fontSize: 18, marginBottom: 10 }}>{t('mapLocationTitle')}</div>
+              <div style={{ fontSize: 14, lineHeight: 1.5, color: '#5c4032' }}>
+                85 Ibrahim Rugova, Gracke 14000
+              </div>
+            </div>
+            <div
+              style={{
+                display: 'inline-flex',
+                alignItems: 'center',
+                gap: 8,
+                width: 'fit-content',
+                marginTop: 16,
+                padding: '0.7rem 1rem',
+                borderRadius: 999,
+                background: '#dc2626',
+                color: '#fff',
+                fontWeight: 700,
+              }}
+            >
+              <span aria-hidden="true">📍</span>
+              <span>{t('openMap')}</span>
+            </div>
+          </a>
         </div>
       </div>
     </footer>

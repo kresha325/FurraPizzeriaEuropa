@@ -46,6 +46,8 @@ const translations = {
     email: 'Email',
     phone: 'Tel/WhatsApp/Viber',
     followUs: 'Na ndiqni:',
+    openMap: 'Hape në Google Maps',
+    mapLocationTitle: 'Lokacioni ynë',
   },
   en: {
     home: 'Home',
@@ -92,6 +94,8 @@ const translations = {
     email: 'Email',
     phone: 'Phone/WhatsApp/Viber',
     followUs: 'Follow us:',
+    openMap: 'Open in Google Maps',
+    mapLocationTitle: 'Our location',
   },
 };
 
