@@ -1,4 +1,25 @@
 /* --- Product List Grid Modern --- */
+.menu-toast {
+  position: sticky;
+  top: 1rem;
+  z-index: 30;
+  width: fit-content;
+  max-width: min(92vw, 460px);
+  margin: 0 auto 1rem auto;
+  padding: 0.85rem 1.15rem;
+  border-radius: 999px;
+  color: #fff;
+  font-weight: 700;
+  text-align: center;
+  box-shadow: 0 12px 28px #0000002a;
+  animation: toastSlideIn 0.24s ease;
+}
+.menu-toast-success {
+  background: linear-gradient(135deg, #b45309 0%, #7c2d12 100%);
+}
+.menu-toast-warning {
+  background: linear-gradient(135deg, #991b1b 0%, #7f1d1d 100%);
+}
 .product-list {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(240px, 260px));
@@ -31,10 +52,15 @@
   border: none;
   padding: 0;
   box-sizing: border-box;
+  transition: transform 0.18s ease, box-shadow 0.18s ease;
 }
 .product-card.modern:hover {
   box-shadow: 0 12px 36px #dc262640, 0 2px 12px #78350f16;
   transform: translateY(-4px);
+}
+.product-card.modern.product-card-selected {
+  box-shadow: 0 16px 40px #dc262660, 0 2px 14px #78350f1a;
+  animation: cardPulse 0.34s ease;
 }
 .product-img-top {
   width: 100%;
@@ -75,6 +101,9 @@
   top: -32px;
   transform: translateX(-50%);
   z-index: 2;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
 }
 .add-btn-circle {
   width: 64px;
@@ -90,11 +119,64 @@
   color: #a96b4a;
   cursor: pointer;
   transition: background 0.18s, transform 0.15s, box-shadow 0.18s;
+  position: relative;
 }
 .add-btn-circle:hover {
   background: linear-gradient(135deg, #fef3c7 60%, #fff 100%);
   transform: scale(1.08);
   box-shadow: 0 8px 32px #a96b4a33;
+}
+.add-btn-circle.is-selected {
+  background: linear-gradient(135deg, #fff6d8 0%, #ffd58a 100%);
+  border-color: #fff;
+  color: #7b3f1d;
+  box-shadow: 0 10px 26px #f59e0b55;
+  animation: addBounce 0.28s ease;
+}
+.cart-adjust-btn {
+  width: 38px;
+  height: 38px;
+  border-radius: 999px;
+  border: 2px solid #fff6dd;
+  background: rgba(123, 63, 29, 0.92);
+  color: #fff;
+  font-size: 1.4rem;
+  font-weight: 800;
+  line-height: 1;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 8px 20px #00000024;
+  cursor: pointer;
+  transition: transform 0.15s ease, background 0.18s ease;
+}
+.cart-adjust-btn:hover {
+  transform: scale(1.08);
+}
+.cart-adjust-btn.remove {
+  background: rgba(127, 29, 29, 0.96);
+}
+.cart-adjust-btn.add {
+  background: rgba(180, 83, 9, 0.96);
+}
+.cart-qty-badge {
+  position: absolute;
+  right: -3px;
+  top: -3px;
+  min-width: 22px;
+  height: 22px;
+  padding: 0 6px;
+  border-radius: 999px;
+  background: #dc2626;
+  color: #fff;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.78rem;
+  font-weight: 800;
+  line-height: 1;
+  box-shadow: 0 4px 12px #0003;
+  animation: badgePop 0.22s ease;
 }
 .cart-icon {
   font-size: 1.5em;
@@ -122,6 +204,64 @@
   font-weight: 600;
   text-align: center;
   text-shadow: 0 1px 4px #0004;
+}
+.product-cart-status {
+  margin-top: 0.45rem;
+  min-height: 1.2rem;
+  color: #fff2cf;
+  font-size: 0.92rem;
+  font-weight: 700;
+  letter-spacing: 0.02em;
+  opacity: 0.9;
+}
+.product-cart-status.is-visible {
+  color: #fff;
+}
+
+@keyframes addBounce {
+  0% {
+    transform: scale(0.9);
+  }
+  60% {
+    transform: scale(1.1);
+  }
+  100% {
+    transform: scale(1);
+  }
+}
+
+@keyframes badgePop {
+  0% {
+    transform: scale(0.7);
+    opacity: 0;
+  }
+  100% {
+    transform: scale(1);
+    opacity: 1;
+  }
+}
+
+@keyframes cardPulse {
+  0% {
+    transform: translateY(0) scale(1);
+  }
+  50% {
+    transform: translateY(-2px) scale(1.015);
+  }
+  100% {
+    transform: translateY(0) scale(1);
+  }
+}
+
+@keyframes toastSlideIn {
+  0% {
+    transform: translateY(-10px);
+    opacity: 0;
+  }
+  100% {
+    transform: translateY(0);
+    opacity: 1;
+  }
 }
 /* --- Modern & Warm Bakery/Pizzeria Theme --- */
 :root {
@@ -181,5 +321,12 @@ h1, h2, h3, h4, h5, h6 {
   }
   .product-card.modern {
     max-width: min(100%, 320px);
+  }
+  .product-btn-circle {
+    gap: 0.35rem;
+  }
+  .cart-adjust-btn {
+    width: 34px;
+    height: 34px;
   }
 }

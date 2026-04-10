@@ -45,9 +45,17 @@ export default function AppRouter() {
 
   const handleDecrement = (id) => {
     setCart((prev) =>
-      prev.map((item) =>
-        item.id === id && item.qty > 1 ? { ...item, qty: item.qty - 1 } : item
-      )
+      prev.flatMap((item) => {
+        if (item.id !== id) {
+          return [item];
+        }
+
+        if (item.qty <= 1) {
+          return [];
+        }
+
+        return [{ ...item, qty: item.qty - 1 }];
+      })
     );
   };
 
@@ -59,7 +67,10 @@ export default function AppRouter() {
         <div style={{ minHeight: '60vh' }}>
           <Routes>
             <Route path="/" element={<Home />} />
-            <Route path="/menu" element={<Menu onAddToCart={handleAddToCart} />} />
+            <Route
+              path="/menu"
+              element={<Menu onAddToCart={handleAddToCart} onDecrement={handleDecrement} cart={cart} />}
+            />
             <Route
               path="/cart"
               element={

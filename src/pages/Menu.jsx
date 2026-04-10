@@ -1,13 +1,26 @@
 
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import menuItems from '../menu.json';
 import { useLanguage } from '../localization.jsx';
 import { getFallbackProductImage, resolveProductImage } from '../utils/resolveProductImage.js';
 import './Menu.css';
 
-export default function Menu({ onAddToCart }) {
+export default function Menu({ onAddToCart, onDecrement, cart = [] }) {
   const [selectedCategory, setSelectedCategory] = useState('all');
+  const [toast, setToast] = useState(null);
   const { t } = useLanguage();
+
+  useEffect(() => {
+    if (!toast) {
+      return undefined;
+    }
+
+    const timeoutId = window.setTimeout(() => {
+      setToast(null);
+    }, 1800);
+
+    return () => window.clearTimeout(timeoutId);
+  }, [toast]);
 
   const products = menuItems.map((product) => ({
     ...product,
@@ -17,9 +30,30 @@ export default function Menu({ onAddToCart }) {
   // Merr kategoritë unike
   const categories = Array.from(new Set(products.map(p => p.category)));
   const filteredProducts = selectedCategory === 'all' ? products : products.filter(p => p.category === selectedCategory);
+  const cartQuantityByProductId = new Map(cart.map((item) => [item.id, item.qty]));
+
+  const showToast = (message, tone) => {
+    setToast({ message, tone });
+  };
+
+  const handleAddFromMenu = (product) => {
+    onAddToCart(product);
+    showToast(`${product.name} u shtua ne shporte`, 'success');
+  };
+
+  const handleRemoveFromMenu = (product) => {
+    onDecrement(product.id);
+    showToast(`${product.name} u hoq nga shporta`, 'warning');
+  };
 
   return (
     <div className="menu-container">
+      {toast && (
+        <div className={`menu-toast menu-toast-${toast.tone}`} role="status" aria-live="polite">
+          {toast.message}
+        </div>
+      )}
+
       <h1>{t('menuPageTitle')}</h1>
       <p className="menu-subtext">{t('menuPageSub')}</p>
 
@@ -39,8 +73,12 @@ export default function Menu({ onAddToCart }) {
       </div>
 
       <div className="product-list">
-        {filteredProducts.map((product) => (
-          <div className="product-card modern" key={product.id}>
+        {filteredProducts.map((product) => {
+          const quantityInCart = cartQuantityByProductId.get(product.id) ?? 0;
+          const isSelected = quantityInCart > 0;
+
+          return (
+          <div className={`product-card modern${isSelected ? ' product-card-selected' : ''}`} key={product.id}>
             <div className="product-img-top">
               <img
                 src={product.image ? product.image : getFallbackProductImage()}
@@ -57,17 +95,46 @@ export default function Menu({ onAddToCart }) {
             </div>
             <div className="product-card-bottom">
               <div className="product-btn-circle">
-                <button className="add-btn-circle" onClick={() => onAddToCart(product)}>
+                {isSelected && (
+                  <button
+                    className="cart-adjust-btn remove"
+                    onClick={() => handleRemoveFromMenu(product)}
+                    aria-label={`Hiq nje ${product.name} nga shporta`}
+                    type="button"
+                  >
+                    -
+                  </button>
+                )}
+                <button
+                  className={`add-btn-circle${isSelected ? ' is-selected' : ''}`}
+                  onClick={() => handleAddFromMenu(product)}
+                  aria-label={isSelected ? `${product.name}, ${quantityInCart} ne shporte` : `${product.name}, shto ne shporte`}
+                  type="button"
+                >
                   <span className="cart-icon" aria-hidden="true">🛒</span>
+                  {quantityInCart > 0 && <span className="cart-qty-badge">{quantityInCart}</span>}
                 </button>
+                {isSelected && (
+                  <button
+                    className="cart-adjust-btn add"
+                    onClick={() => handleAddFromMenu(product)}
+                    aria-label={`Shto edhe nje ${product.name} ne shporte`}
+                    type="button"
+                  >
+                    +
+                  </button>
+                )}
               </div>
               <div className="product-info-modern">
                 <span className="product-name-modern">{product.name}</span>
                 <span className="product-price-modern">{Number(product.price).toFixed(2)}€</span>
+                <span className={`product-cart-status${isSelected ? ' is-visible' : ''}`}>
+                  {isSelected ? `U shtua: ${quantityInCart}` : 'Shto ne shporte'}
+                </span>
               </div>
             </div>
           </div>
-        ))}
+        )})}
       </div>
     </div>
   );
