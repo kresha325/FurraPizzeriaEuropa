@@ -5,6 +5,7 @@ import { useLanguage } from '../localization.jsx';
 
 export default function Footer() {
   const { t, lang } = useLanguage();
+  const businessMapUrl = 'https://www.google.com/maps/place/Furra+Pizzeria+EUROPA/@42.5090158,21.1122287,153m/data=!3m2!1e3!4b1!4m6!3m5!1s0x13548300313310cd:0xfd307bde823a6fc8!8m2!3d42.5090158!4d21.1122287!16s%2Fg%2F11nbh5zk63?entry=ttu&g_ep=EgoyMDI2MDQwOC4wIKXMDSoASAFQAw%3D%3D';
   return (
     <footer style={{ background: '#222', color: '#fff', padding: '2rem 0', marginTop: '2rem' }}>
       <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', maxWidth: 1200, margin: '0 auto', flexWrap: 'wrap', gap: '2rem' }}>
@@ -15,7 +16,7 @@ export default function Footer() {
             <span style={{ fontWeight: 'bold', fontSize: 20, textShadow: '0 2px 8px #000, 0 4px 16px #000a' }}>Europa</span>
           </div>
           <div style={{ fontSize: 15, marginBottom: 4 }}>
-            {t('address')}: <a href="https://www.google.com/maps/search/?api=1&query=85+Ibrahim+Rugova,+Grackë+14000" target="_blank" rel="noopener noreferrer" style={{ color: '#fff', textDecoration: 'underline' }}>
+            {t('address')}: <a href={businessMapUrl} target="_blank" rel="noopener noreferrer" style={{ color: '#fff', textDecoration: 'underline' }}>
               85 Ibrahim Rugova, Grackë 14000
             </a>
           </div>
@@ -109,50 +110,16 @@ export default function Footer() {
         </div>
         {/* Right: Google Map */}
         <div style={{ flex: 1, minWidth: 260, textAlign: 'right' }}>
-          <a
-            href="https://www.google.com/maps/search/?api=1&query=42.5090158,21.1122287"
-            target="_blank"
-            rel="noopener noreferrer"
-            aria-label={t('openMap')}
-            style={{
-              display: 'flex',
-              flexDirection: 'column',
-              justifyContent: 'space-between',
-              minHeight: 160,
-              padding: '1rem',
-              borderRadius: 16,
-              background: 'linear-gradient(135deg, #fff8eb 0%, #fef3c7 100%)',
-              color: '#2d1b0e',
-              textDecoration: 'none',
-              boxShadow: '0 10px 24px #00000024',
-              border: '1px solid #ffffff1f',
-              textAlign: 'left',
-            }}
-          >
-            <div>
-              <div style={{ fontWeight: 'bold', fontSize: 18, marginBottom: 10 }}>{t('mapLocationTitle')}</div>
-              <div style={{ fontSize: 14, lineHeight: 1.5, color: '#5c4032' }}>
-                85 Ibrahim Rugova, Gracke 14000
-              </div>
-            </div>
-            <div
-              style={{
-                display: 'inline-flex',
-                alignItems: 'center',
-                gap: 8,
-                width: 'fit-content',
-                marginTop: 16,
-                padding: '0.7rem 1rem',
-                borderRadius: 999,
-                background: '#dc2626',
-                color: '#fff',
-                fontWeight: 700,
-              }}
-            >
-              <span aria-hidden="true">📍</span>
-              <span>{t('openMap')}</span>
-            </div>
-          </a>
+          <iframe
+            title={t('mapLocationTitle')}
+            src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d665.4033255686173!2d21.112228700000003!3d42.50901580000001!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x13548300313310cd%3A0xfd307bde823a6fc8!2sFurra%20Pizzeria%20EUROPA!5e1!3m2!1sen!2s!4v1775866037393!5m2!1sen!2s"
+            width="100%"
+            height="160"
+            style={{ border: 0, borderRadius: 8, boxShadow: '0 10px 24px #00000024' }}
+            allowFullScreen=""
+            loading="lazy"
+            referrerPolicy="no-referrer-when-downgrade"
+          ></iframe>
         </div>
       </div>
     </footer>
