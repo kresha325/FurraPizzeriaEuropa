@@ -10,7 +10,7 @@
   { "id": 9, "name": "Mantia me djath", "price": 0.25, "category": "Peciva", "image": "mantia_djath.jpeg" },
   { "id": 10, "name": "Kroasan me airokrem", "price": 0.70, "category": "Peciva", "image": "croasantaerocrem.jpeg" },
   { "id": 11, "name": "Kroasan me vanile", "price": 0.70, "category": "Peciva", "image": "croasantvanill.jpeg" },
-  { "id": 11, "name": "Kroasan me Fistëk", "price": 1.20, "category": "Peciva", "image": "croasantfistik.jpeg" },
+  { "id": 51, "name": "Kroasan me Fistëk", "price": 1.20, "category": "Peciva", "image": "croasantfistik.jpeg" },
   { "id": 12, "name": "Mini kroasan", "price": 0.25, "category": "Peciva", "image": "minicroasant.jpeg" },
   { "id": 13, "name": "Kifle picë", "price": 0.60, "category": "Peciva", "image": "kiflepic.jpeg" },
   { "id": 14, "name": "Kifle me vishlle", "price": 0.50, "category": "Peciva", "image": "kiflevirshllet.jpeg" },

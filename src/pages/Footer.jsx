@@ -4,15 +4,15 @@ import logo from '../assets/logo.png';
 import { useLanguage } from '../localization.jsx';
 
 export default function Footer() {
-  const { t, lang } = useLanguage();
+  const { t } = useLanguage();
   const businessMapUrl = 'https://www.google.com/maps/place/Furra+Pizzeria+EUROPA/@42.5090158,21.1122287,153m/data=!3m2!1e3!4b1!4m6!3m5!1s0x13548300313310cd:0xfd307bde823a6fc8!8m2!3d42.5090158!4d21.1122287!16s%2Fg%2F11nbh5zk63?entry=ttu&g_ep=EgoyMDI2MDQwOC4wIKXMDSoASAFQAw%3D%3D';
   return (
-    <footer style={{ background: '#222', color: '#fff', padding: '2rem 0', marginTop: '2rem' }}>
+    <footer className="site-footer" style={{ background: '#222', color: '#fff', padding: '2rem 0', marginTop: '2rem' }}>
       <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', maxWidth: 1200, margin: '0 auto', flexWrap: 'wrap', gap: '2rem' }}>
         {/* Left: Business Info */}
         <div style={{ flex: 1, minWidth: 220 }}>
           <div style={{ display: 'flex', alignItems: 'center', gap: '1rem', marginBottom: 8 }}>
-            <img src={logo} alt="Europa Logo" style={{ width: 60, height: 60, borderRadius: 8, background: 'none' }} />
+            <img src={logo} alt={t('brandHomeLabel')} style={{ width: 60, height: 60, borderRadius: 8, background: 'none' }} />
             <span style={{ fontWeight: 'bold', fontSize: 20, textShadow: '0 2px 8px #000, 0 4px 16px #000a' }}>Europa</span>
           </div>
           <div style={{ fontSize: 15, marginBottom: 4 }}>

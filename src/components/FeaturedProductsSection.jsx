@@ -9,7 +9,7 @@ const featuredProductIds = [33, 5, 35];
 
 export default function FeaturedProductsSection() {
   const navigate = useNavigate();
-  const { t } = useLanguage();
+  const { t, productName, categoryName } = useLanguage();
 
   const featuredProducts = featuredProductIds
     .map((productId) => menuItems.find((product) => product.id === productId))
@@ -38,20 +38,22 @@ export default function FeaturedProductsSection() {
             role="button"
             tabIndex={0}
           >
-            <div className="featured-product-image-wrap">
-              <img
-                src={product.image}
-                alt={product.name}
-                className="featured-product-image"
-              />
-            </div>
+            {product.image && (
+              <div className="featured-product-image-wrap">
+                <img
+                  src={product.image}
+                  alt={productName(product)}
+                  className="featured-product-image"
+                />
+              </div>
+            )}
             <div className="featured-product-bottom">
               <div className="featured-product-cta" aria-hidden="true">
                 <span>{t('viewMenu')}</span>
               </div>
               <div className="featured-product-content">
-                <span className="featured-product-category">{product.category}</span>
-                <span className="featured-product-name">{product.name}</span>
+                <span className="featured-product-category">{categoryName(product.category)}</span>
+                <span className="featured-product-name">{productName(product)}</span>
                 <span className="featured-product-price">{Number(product.price).toFixed(2)}€</span>
               </div>
             </div>

@@ -1,4 +1,4 @@
-import { createContext, useContext, useState } from 'react';
+import { createContext, useContext, useEffect, useMemo, useState } from 'react';
 
 const translations = {
   sq: {
@@ -8,8 +8,26 @@ const translations = {
     viewMenu: 'Shiko Menunë',
     welcome: 'Mirë se vini në faqen tonë zyrtare! Shijoni bukën dhe picat më të mira në qytet.',
     bakery: 'Furra & Piceria Europa',
+    bakeryTagline: 'FURRË & PICERI',
+    freshTradition: 'Traditë e freskët, çdo ditë',
+    heroTitle: 'Shija që të kthen\n gjithmonë në shtëpi.',
+    orderWhatsApp: 'Porosit në WhatsApp',
+    heroNote: 'Përgatitur me dashuri. Pjekur çdo ditë.',
     about: 'Rreth Nesh',
     aboutText: 'Jemi një furrë dhe piceri familjare me traditë, që ofrojmë produkte të freskëta çdo ditë. Përdorim përbërës cilësorë dhe recetat më të mira për të kënaqur çdo shije.',
+    aboutStory: 'Jemi një furrë dhe piceri familjare me traditë. Furra & Piceria jonë sjell shijen autentike në qytetin tuaj. Çdo produkt përgatitet me përbërës të freskët, recetë origjinale dhe dashuri për cilësinë.',
+    freshDaily: 'Të freskëta çdo ditë',
+    traditionalTaste: 'Shije tradicionale',
+    madeWithCare: 'Përgatitur me kujdes',
+    freshDough: 'Brumë i freskët çdo ditë',
+    traditionalOven: 'Pjekje në furrë tradicionale',
+    carefullySelectedIngredients: 'Përbërës të zgjedhur me kujdes',
+    pizzeriaInterior: 'Ambient i picerisë',
+    scrollToTop: 'Shko në krye',
+    pizzaImage: 'Pizza',
+    removeCartItem: 'Hiq produktin nga shporta',
+    decreaseQuantity: 'Ule sasinë',
+    increaseQuantity: 'Rrite sasinë',
     menuSectionTitle: 'Menuja jonë',
     menuSectionDesc: 'Zgjidh kategorinë tënde të preferuar!',
     menuCardBread: 'Bukë të freskëta',
@@ -36,18 +54,37 @@ const translations = {
     orderFromWeb: 'Porosi nga Web',
     notFound: 'Faqja nuk u gjet!',
     testimonialSection: 'Çfarë thonë klientët tanë',
-    contact: 'Kontakt',
-    contactText: 'Na kontaktoni në WhatsApp: {phone}\nOse na vizitoni në lokacionin tonë për të provuar produktet tona të freskëta.',
-    menuPageFilter: 'Filtro sipas kategorisë:',
     testimonial1: 'Shërbimi ishte i shkëlqyer dhe ushqimi shumë i shijshëm!',
     testimonial2: 'Ambienti shumë i ngrohtë dhe stafi shumë mikpritës.',
     testimonial3: 'Produktet janë gjithmonë të freskëta dhe të shijshme!',
+    viewProfile: 'Shiko profilin',
+    contact: 'Kontakt',
+    contactTitle: 'Diçka e shijshme\nështë vetëm një mesazh larg.',
+    contactText: 'Na kontaktoni në WhatsApp: {phone}\nOse na vizitoni në lokacionin tonë për të provuar produktet tona të freskëta.',
     address: 'Adresa',
     email: 'Email',
     phone: 'Tel/WhatsApp/Viber',
     followUs: 'Na ndiqni:',
     openMap: 'Hape në Google Maps',
     mapLocationTitle: 'Lokacioni ynë',
+    languageLabel: 'Gjuha',
+    brandHomeLabel: 'Europa — Kryefaqja',
+    categoryBread: 'Bukë',
+    categoryBurek: 'Burek',
+    categoryPastries: 'Peciva',
+    categoryPuffPastry: 'Ëmbëlsira me petë',
+    categoryDesserts: 'Ëmbëlsira',
+    categorySpecials: 'Speciale',
+    categoryPizza: 'Pizza',
+    addedToCartToast: '{product} u shtua në shportë',
+    removedFromCartToast: '{product} u hoq nga shporta',
+    addProductAria: 'Shto {product} në shportë',
+    removeProductAria: 'Hiq një {product} nga shporta',
+    addAnotherProductAria: 'Shto edhe një {product} në shportë',
+    productInCartAria: '{product}, {quantity} në shportë',
+    productAddedStatus: 'U shtua: {quantity}',
+    addToCartStatus: 'Shto në shportë',
+    languageChanged: 'Gjuha u ndryshua',
   },
   en: {
     home: 'Home',
@@ -56,8 +93,26 @@ const translations = {
     viewMenu: 'View Menu',
     welcome: 'Welcome to our official page! Enjoy the best bread and pizza in town.',
     bakery: 'Europa Bakery & Pizzeria',
+    bakeryTagline: 'BAKERY & PIZZERIA',
+    freshTradition: 'Fresh tradition, every day',
+    heroTitle: 'The taste that always\nbrings you home.',
+    orderWhatsApp: 'Order on WhatsApp',
+    heroNote: 'Made with love. Baked every day.',
     about: 'About Us',
     aboutText: 'We are a family bakery and pizzeria with tradition, offering fresh products every day. We use quality ingredients and the best recipes to satisfy every taste.',
+    aboutStory: 'We are a family bakery and pizzeria with a long tradition. Our bakery and pizzeria bring authentic flavor to your town. Every product is made with fresh ingredients, an original recipe, and a love of quality.',
+    freshDaily: 'Fresh every day',
+    traditionalTaste: 'Traditional taste',
+    madeWithCare: 'Made with care',
+    freshDough: 'Fresh dough every day',
+    traditionalOven: 'Baked in a traditional oven',
+    carefullySelectedIngredients: 'Carefully selected ingredients',
+    pizzeriaInterior: 'Pizzeria interior',
+    scrollToTop: 'Scroll to top',
+    pizzaImage: 'Pizza',
+    removeCartItem: 'Remove item from cart',
+    decreaseQuantity: 'Decrease quantity',
+    increaseQuantity: 'Increase quantity',
     menuSectionTitle: 'Our Menu',
     menuSectionDesc: 'Choose your favorite category!',
     menuCardBread: 'Fresh Bread',
@@ -65,52 +120,161 @@ const translations = {
     menuCardBurek: 'Warm Burek',
     menuCardBurekDesc: 'Burek with meat, cheese or spinach.',
     menuCardPizza: 'Italian Pizza',
-    menuCardPizzaDesc: 'Pizza with a traditional recipe.',
+    menuCardPizzaDesc: 'Pizza made with a traditional recipe.',
     menuCardBtn: 'View Menu',
     featuredProductsTitle: 'Most Ordered Products',
-    featuredProductsDesc: 'The customer favorites you will most likely want to order first.',
+    featuredProductsDesc: 'Customer favorites you may want to try first.',
     menuPageTitle: 'Menu',
-    menuPageSub: 'Choose by your taste or find your favorite food!',
+    menuPageSub: 'Choose what you like or find your favorite food!',
     filterByCategory: 'Filter by category:',
     allCategories: 'All',
     addToCart: 'Add to cart',
     addShort: 'Add',
     cartTitle: 'Cart',
-    cartEmpty: 'Cart is empty.',
+    cartEmpty: 'Your cart is empty.',
     remove: 'Remove',
     total: 'Total',
     sendWhatsapp: 'Send on WhatsApp',
     sendSMS: 'Send by SMS',
-    orderFromWeb: 'Order from Web',
+    orderFromWeb: 'Online order',
     notFound: 'Page not found!',
-    testimonialSection: 'What our clients say',
+    testimonialSection: 'What our customers say',
+    testimonial1: 'The service was excellent and the food was delicious!',
+    testimonial2: 'A very welcoming atmosphere and friendly staff.',
+    testimonial3: 'The products are always fresh and delicious!',
+    viewProfile: 'View profile',
     contact: 'Contact',
-    contactText: 'Contact us on WhatsApp: {phone}\nOr visit us at our location to try our fresh products.',
-    menuPageFilter: 'Filter by category:',
-    testimonial1: 'The service was excellent and the food very tasty!',
-    testimonial2: 'Very warm environment and very welcoming staff.',
-    testimonial3: 'Products are always fresh and delicious!',
+    contactTitle: 'Something delicious\nis just one message away.',
+    contactText: 'Contact us on WhatsApp: {phone}\nOr visit us to try our fresh products.',
     address: 'Address',
     email: 'Email',
     phone: 'Phone/WhatsApp/Viber',
     followUs: 'Follow us:',
     openMap: 'Open in Google Maps',
     mapLocationTitle: 'Our location',
+    languageLabel: 'Language',
+    brandHomeLabel: 'Europa — Home',
+    categoryBread: 'Bread',
+    categoryBurek: 'Burek',
+    categoryPastries: 'Pastries',
+    categoryPuffPastry: 'Puff pastries',
+    categoryDesserts: 'Desserts',
+    categorySpecials: 'Specialties',
+    categoryPizza: 'Pizza',
+    addedToCartToast: '{product} added to cart',
+    removedFromCartToast: '{product} removed from cart',
+    addProductAria: 'Add {product} to cart',
+    removeProductAria: 'Remove one {product} from cart',
+    addAnotherProductAria: 'Add another {product} to cart',
+    productInCartAria: '{product}, {quantity} in cart',
+    productAddedStatus: 'Added: {quantity}',
+    addToCartStatus: 'Add to cart',
+    languageChanged: 'Language changed',
   },
 };
 
-const LanguageContext = createContext();
+const productNamesEn = {
+  1: '500 g loaf',
+  2: 'Rye bread',
+  3: 'Brown bread',
+  4: 'Cornbread',
+  5: 'Meat burek',
+  6: 'Cheese burek',
+  7: 'Spinach burek',
+  8: 'Meat mantia',
+  9: 'Cheese mantia',
+  10: 'Croissant with chocolate-hazelnut spread',
+  11: 'Vanilla croissant',
+  12: 'Mini croissant',
+  13: 'Pizza roll',
+  14: 'Sausage roll',
+  15: 'Roll with chocolate-hazelnut spread',
+  16: 'Cottage cheese roll',
+  17: 'Hane roll',
+  18: 'Cherry puff pastry',
+  19: 'Apple puff pastry',
+  20: 'Sour cherry puff pastry',
+  21: 'Doughnut with chocolate-hazelnut spread',
+  22: 'Doughnut with jam',
+  23: 'Large sesame ring pastry',
+  24: 'Sesame ring pastry',
+  25: 'Sour cherry strudel',
+  26: 'Mini Hane pastry',
+  27: 'Porec pastry',
+  28: 'Cream-filled pastry fingers',
+  29: 'White bread sandwich',
+  30: 'Diet sandwich',
+  31: 'Flija',
+  32: 'Ham pizza slice',
+  33: 'Sausage pizza slice',
+  34: 'Salami pizza slice',
+  35: 'Chicken tortilla',
+  36: 'Small Margherita pizza',
+  37: 'Medium Margherita pizza',
+  38: 'Family Margherita pizza',
+  39: 'Small prosciutto pizza',
+  40: 'Medium prosciutto pizza',
+  41: 'Family prosciutto pizza',
+  42: 'Small sausage pizza',
+  43: 'Medium sausage pizza',
+  44: 'Family sausage pizza',
+  45: 'Small house pizza',
+  46: 'Medium house pizza',
+  47: 'Family house pizza',
+  48: 'Tulumba',
+  49: 'Eclair',
+  50: 'Trilece',
+  51: 'Pistachio croissant',
+};
+
+const categoryKeys = {
+  Bukë: 'categoryBread',
+  Burek: 'categoryBurek',
+  Peciva: 'categoryPastries',
+  Lesnato: 'categoryPuffPastry',
+  'Ëmbëlsira': 'categoryDesserts',
+  Speciale: 'categorySpecials',
+  Pizza: 'categoryPizza',
+};
+
+const LanguageContext = createContext(null);
 
 export function LanguageProvider({ children }) {
   const [lang, setLang] = useState('sq');
-  const t = (key) => translations[lang][key] || key;
+
+  useEffect(() => {
+    document.documentElement.lang = lang;
+  }, [lang]);
+
+  const value = useMemo(() => {
+    const t = (key, params = {}) => {
+      const template = translations[lang][key] ?? key;
+      return Object.entries(params).reduce(
+        (text, [name, replacement]) => text.replaceAll(`{${name}}`, String(replacement)),
+        template,
+      );
+    };
+    const productName = (product) =>
+      lang === 'en' ? productNamesEn[product.id] ?? product.name : product.name;
+    const categoryName = (category) => {
+      const key = categoryKeys[category];
+      return key ? t(key) : category;
+    };
+
+    return { lang, setLang, t, productName, categoryName };
+  }, [lang]);
+
   return (
-    <LanguageContext.Provider value={{ lang, setLang, t }}>
+    <LanguageContext.Provider value={value}>
       {children}
     </LanguageContext.Provider>
   );
 }
 
 export function useLanguage() {
-  return useContext(LanguageContext);
+  const context = useContext(LanguageContext);
+  if (!context) {
+    throw new Error('useLanguage must be used within a LanguageProvider');
+  }
+  return context;
 }

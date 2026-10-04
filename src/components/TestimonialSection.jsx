@@ -82,7 +82,7 @@ const TestimonialSection = () => {
                   <span>{test.location}</span>
                 </div>
                 <a href={test.social.url} target="_blank" rel="noopener noreferrer" className="testimonial-social" title={test.social.icon}>
-                  View profile
+                  {t('viewProfile')}
                 </a>
               </div>
             </div>

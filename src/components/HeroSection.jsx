@@ -1,11 +1,13 @@
 import React from 'react';
 import FlameSVG from './FlameSVG.jsx';
+import { useLanguage } from '../localization.jsx';
 import '../theme.css';
 
 const pizzaImg = 'https://images.unsplash.com/photo-1504674900247-0877df9cc836?auto=format&fit=crop&w=1200&q=80';
 
 
 export default function HeroSection() {
+  const { t } = useLanguage();
   return (
     <section
       style={{
@@ -78,7 +80,7 @@ export default function HeroSection() {
             animation: 'fadeIn 1.2s 0.2s forwards',
           }}
         >
-          Furra & Piceria Europa
+          {t('bakery')}
         </h1>
         <button
           className="btn-primary"
@@ -90,7 +92,7 @@ export default function HeroSection() {
             order: 2,
           }}
         >
-          Shiko Menunë
+          {t('viewMenu')}
         </button>
         <div
           className="hero-subtitle"
@@ -109,7 +111,7 @@ export default function HeroSection() {
             display: 'inline-block',
           }}
         >
-          Mirë se vini në faqen tonë zyrtare! Shijoni bukën dhe picat më të mira në qytet.
+          {t('welcome')}
         </div>
       </div>
       {/* Animations */}

@@ -1,9 +1,11 @@
 import React from 'react';
+import { useLanguage } from '../localization.jsx';
 import '../theme.css';
 
 const aboutImg = 'https://images.unsplash.com/photo-1519864600265-abb23847ef2c?auto=format&fit=crop&w=600&q=80'; // Ambient ose kuzhinë
 
 export default function AboutSection() {
+  const { t } = useLanguage();
   return (
     <section style={{
       background: 'var(--color-bg)',
@@ -32,22 +34,22 @@ export default function AboutSection() {
             color: 'var(--color-accent)',
             marginBottom: 18,
           }}>
-            Rreth Nesh
+            {t('about')}
           </h2>
           <p style={{ color: 'var(--color-text)', fontSize: '1.13rem', opacity: 0.92, marginBottom: 18 }}>
-            Jemi një furrë dhe piceri familjare me traditë. Furra & Piceria jonë sjell shijen autentike në qytetin tuaj. Çdo produkt përgatitet me përbërës të freskët, recetë origjinale dhe dashuri për cilësinë.
+            {t('aboutStory')}
           </p>
           <ul style={{ color: 'var(--color-text)', opacity: 0.88, fontSize: '1.05rem', marginLeft: 18, marginBottom: 18 }}>
-            <li>Brumë i freskët çdo ditë</li>
-            <li>Pjekje në furrë tradicionale</li>
-            <li>Përbërës të zgjedhur me kujdes</li>
+            <li>{t('freshDough')}</li>
+            <li>{t('traditionalOven')}</li>
+            <li>{t('carefullySelectedIngredients')}</li>
           </ul>
         </div>
         {/* Foto djathtas */}
         <div style={{ flex: 1, minWidth: 260, display: 'flex', justifyContent: 'center' }}>
           <img
             src={aboutImg}
-            alt="Ambienti i picerisë"
+            alt={t('pizzeriaInterior')}
             loading="lazy"
             style={{
               width: '100%',

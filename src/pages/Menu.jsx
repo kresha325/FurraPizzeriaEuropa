@@ -1,17 +1,21 @@
 
 import React, { useEffect, useRef, useState } from 'react';
+import { useSearchParams } from 'react-router-dom';
 import menuItems from '../menu.json';
 import ScrollToTopButton from '../components/ScrollToTopButton.jsx';
 import { useLanguage } from '../localization.jsx';
-import { getFallbackProductImage, resolveProductImage } from '../utils/resolveProductImage.js';
+import { resolveProductImage } from '../utils/resolveProductImage.js';
 import './Menu.css';
 
+const slugifyCategory = (category) =>
+  category.normalize('NFD').replace(/[\u0300-\u036f]/g, '').toLowerCase();
+
 export default function Menu({ onAddToCart, onDecrement, cart = [] }) {
-  const [selectedCategory, setSelectedCategory] = useState('all');
+  const [searchParams, setSearchParams] = useSearchParams();
   const [toast, setToast] = useState(null);
   const [centeredMobileProductId, setCenteredMobileProductId] = useState(null);
   const productCardRefs = useRef(new Map());
-  const { t } = useLanguage();
+  const { t, productName, categoryName } = useLanguage();
 
   useEffect(() => {
     if (!toast) {
@@ -32,6 +36,10 @@ export default function Menu({ onAddToCart, onDecrement, cart = [] }) {
 
   // Merr kategoritë unike
   const categories = Array.from(new Set(products.map(p => p.category)));
+  const requestedCategory = searchParams.get('cat');
+  const selectedCategory = categories.find(
+    (category) => slugifyCategory(category) === requestedCategory
+  ) ?? 'all';
   const filteredProducts = selectedCategory === 'all' ? products : products.filter(p => p.category === selectedCategory);
   const cartQuantityByProductId = new Map(cart.map((item) => [item.id, item.qty]));
 
@@ -94,12 +102,12 @@ export default function Menu({ onAddToCart, onDecrement, cart = [] }) {
 
   const handleAddFromMenu = (product) => {
     onAddToCart(product);
-    showToast(`${product.name} u shtua ne shporte`, 'success');
+    showToast(t('addedToCartToast', { product: productName(product) }), 'success');
   };
 
   const handleRemoveFromMenu = (product) => {
     onDecrement(product.id);
-    showToast(`${product.name} u hoq nga shporta`, 'warning');
+    showToast(t('removedFromCartToast', { product: productName(product) }), 'warning');
   };
 
   const handleProductCardClick = (event, product, isSelected) => {
@@ -127,12 +135,20 @@ export default function Menu({ onAddToCart, onDecrement, cart = [] }) {
         <select
           id="category-filter"
           value={selectedCategory}
-          onChange={e => setSelectedCategory(e.target.value)}
+          onChange={(event) => {
+            const nextSearchParams = new URLSearchParams(searchParams);
+            if (event.target.value === 'all') {
+              nextSearchParams.delete('cat');
+            } else {
+              nextSearchParams.set('cat', slugifyCategory(event.target.value));
+            }
+            setSearchParams(nextSearchParams);
+          }}
           style={{ padding: '6px 18px', borderRadius: 8, fontWeight: 600, fontSize: 16 }}
         >
           <option value="all">{t('allCategories')}</option>
           {categories.map(cat => (
-            <option key={cat} value={cat}>{cat}</option>
+            <option key={cat} value={cat}>{categoryName(cat)}</option>
           ))}
         </select>
       </div>
@@ -155,20 +171,15 @@ export default function Menu({ onAddToCart, onDecrement, cart = [] }) {
               }
             }}
           >
-            <div className="product-img-top">
-              <img
-                src={product.image ? product.image : getFallbackProductImage()}
-                alt={product.name}
-                className="product-img-modern"
-                onError={e => {
-                  const fallback = getFallbackProductImage();
-                  if (e.target.src !== window.location.origin + fallback && e.target.src !== fallback) {
-                    e.target.onerror = null;
-                    e.target.src = fallback;
-                  }
-                }}
-              />
-            </div>
+            {product.image && (
+              <div className="product-img-top">
+                <img
+                  src={product.image}
+                  alt={productName(product)}
+                  className="product-img-modern"
+                />
+              </div>
+            )}
             <div
               className={`product-card-bottom${!isSelected ? ' is-clickable' : ''}`}
               onClick={(event) => handleProductCardClick(event, product, isSelected)}
@@ -183,7 +194,7 @@ export default function Menu({ onAddToCart, onDecrement, cart = [] }) {
               }}
               role={!isSelected ? 'button' : undefined}
               tabIndex={!isSelected ? 0 : -1}
-              aria-label={!isSelected ? `${product.name}, shto ne shporte` : undefined}
+              aria-label={!isSelected ? t('addProductAria', { product: productName(product) }) : undefined}
             >
               <div className="product-btn-circle">
                 {isSelected && (
@@ -193,7 +204,7 @@ export default function Menu({ onAddToCart, onDecrement, cart = [] }) {
                       event.stopPropagation();
                       handleRemoveFromMenu(product);
                     }}
-                    aria-label={`Hiq nje ${product.name} nga shporta`}
+                    aria-label={t('removeProductAria', { product: productName(product) })}
                     type="button"
                   >
                     -
@@ -208,7 +219,9 @@ export default function Menu({ onAddToCart, onDecrement, cart = [] }) {
                       handleAddFromMenu(product);
                     }
                   }}
-                  aria-label={isSelected ? `${product.name}, ${quantityInCart} ne shporte` : `${product.name}, shto ne shporte`}
+                  aria-label={isSelected
+                    ? t('productInCartAria', { product: productName(product), quantity: quantityInCart })
+                    : t('addProductAria', { product: productName(product) })}
                   type="button"
                   disabled={isSelected}
                 >
@@ -223,7 +236,7 @@ export default function Menu({ onAddToCart, onDecrement, cart = [] }) {
                       event.stopPropagation();
                       handleAddFromMenu(product);
                     }}
-                    aria-label={`Shto edhe nje ${product.name} ne shporte`}
+                    aria-label={t('addAnotherProductAria', { product: productName(product) })}
                     type="button"
                   >
                     +
@@ -231,10 +244,12 @@ export default function Menu({ onAddToCart, onDecrement, cart = [] }) {
                 )}
               </div>
               <div className="product-info-modern">
-                <span className="product-name-modern">{product.name}</span>
+                <span className="product-name-modern">{productName(product)}</span>
                 <span className="product-price-modern">{Number(product.price).toFixed(2)}€</span>
                 <span className={`product-cart-status${isSelected ? ' is-visible' : ''}`}>
-                  {isSelected ? `U shtua: ${quantityInCart}` : 'Shto ne shporte'}
+                  {isSelected
+                    ? t('productAddedStatus', { quantity: quantityInCart })
+                    : t('addToCartStatus')}
                 </span>
               </div>
             </div>

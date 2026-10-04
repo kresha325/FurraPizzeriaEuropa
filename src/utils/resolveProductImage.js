@@ -29,9 +29,5 @@ export function resolveProductImage(image) {
     return assetImageMap[fileName];
   }
 
-  if (normalizedPath.startsWith('images/')) {
-    return getPublicAssetPath(normalizedPath);
-  }
-
-  return getPublicAssetPath(`images/${normalizedPath}`);
+  return null;
 }

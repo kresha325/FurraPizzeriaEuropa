@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import menuItems from '../menu.json';
+import { useLanguage } from '../localization.jsx';
 import { getFallbackProductImage, resolveProductImage } from '../utils/resolveProductImage.js';
 
 const fallbackImage = getFallbackProductImage();
@@ -10,6 +11,7 @@ const productImages = Array.from(
       .map((item) => item.image)
       .filter(Boolean)
       .map((image) => resolveProductImage(image))
+      .filter(Boolean)
   )
 );
 
@@ -17,6 +19,7 @@ const rotatingImages = productImages.length > 0 ? productImages : [fallbackImage
 
 export default function FlameSVG() {
   const [index, setIndex] = useState(0);
+  const { t } = useLanguage();
 
   useEffect(() => {
     const interval = setInterval(() => {
@@ -49,7 +52,7 @@ export default function FlameSVG() {
       `}</style>
       <img
         src={rotatingImages[index]}
-        alt="Pizza"
+        alt={t('pizzaImage')}
         style={{ width: '100%', height: '100%', objectFit: 'cover' }}
         onError={(event) => {
           if (event.currentTarget.src !== fallbackImage) {

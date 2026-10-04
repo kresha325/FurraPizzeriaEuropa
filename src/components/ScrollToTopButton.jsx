@@ -1,8 +1,10 @@
 import React, { useEffect, useState } from 'react';
+import { useLanguage } from '../localization.jsx';
 import './ScrollToTopButton.css';
 
 export default function ScrollToTopButton() {
   const [isVisible, setIsVisible] = useState(false);
+  const { t } = useLanguage();
 
   useEffect(() => {
     const handleScroll = () => {
@@ -28,7 +30,7 @@ export default function ScrollToTopButton() {
     <button
       className="scroll-to-top-btn"
       type="button"
-      aria-label="Shko në krye"
+      aria-label={t('scrollToTop')}
       onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}
     >
       ↑
